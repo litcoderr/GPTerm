@@ -13,7 +13,9 @@ Lightweight cli powered by OpenAI to easily generate Linux commands through natu
 
 How many of you have felt the tiredness of having to go back and forth from a browser to your terminal just to perform a simple task on linux just because you were not familiar with the command line tools? GPTerm is a command line tool that enables you to perform linux commands through natural language inputs. Just type,
 
-`> gpterm build a new docker image with a Dockerfile located in ~/project/dockerfile/ named someone/my_awesome_image:latest`
+```bash
+gpterm build a new docker image with a Dockerfile located in ~/project/dockerfile/ named someone/my_awesome_image:latest
+```
 
 and you are bound to enjoy your evening with a nice cup of coffee.
 
@@ -63,4 +65,24 @@ source ~/.zshrc
 
 ## Tutorial
 
-1. 
+### 1. Query Desired Action in the Following Format
+
+```bash
+gpterm [desired action]
+```
+
+### 2. Select and Run a Desired Command
+
+GPTerm will respond in the following format.
+
+```bash
+[1] `command 1` : description about command 1
+[2] `command 2` : description about command 2
+...
+Enter Number (Ctrl-C to abort): 
+```
+
+After reviewing carefully the suggested commands, choose one command and enter in the number associated with it. Pressing `Enter` will run the selected command.
+
+**Disclaimer: Some suggested commands might be destructive! Please review the commands very carefully!**
+
