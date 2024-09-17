@@ -5,7 +5,6 @@ use std::env;
 use std::io;
 use std::io::Write;
 use std::process::Command;
-use shlex;
 
 const ENVVAR: &str = "OPENAI_API_KEY";
 
@@ -39,7 +38,7 @@ async fn answer_query(api_key: &str, query: String) -> Result<String, Box<dyn st
     let messages = json!([
         {
             "role": "system",
-            "content": "You are a helpful linux command assistant. Answer in following format. [1] [linux command wrapped in `] : [very concise explanation] next line [2] ... Reply without additional chat. Only the format."
+            "content": "You are a helpful linux command assistant. Answer in following format, each number sorted in suggestion order. Every suggestion should fully perform user's request(multiple commands with && is allowed). [1] [linux command wrapped in `] : [very concise explanation] next line [2] ... Reply without additional chat. Only the format."
         },
         {
             "role": "user",
@@ -115,17 +114,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
                         } else {
                             let command = commands[(number - 1) as usize].clone();
 
-                            // split command to command and arguments
-                            let parts: Vec<String> = shlex::split(&command).expect("Failed to parse command string");
-                            if let Some((program, args)) = parts.split_first() {
-                                // Execute
-                                Command::new(program)
-                                    .args(args)
-                                    .spawn()
-                                    .expect("Failed to execute command");
-                            } else {
-                                println!("No command to execute!");
-                            }
+                            Command::new("sh")
+                                .arg("-c") // `-c` tells the shell to run the following string
+                                .arg(command)
+                                .spawn()
+                                .expect("Failed to execute command");
                         }
                     }
                     Err(_) => {
