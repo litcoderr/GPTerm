@@ -19,6 +19,8 @@ gpterm build a new docker image with a Dockerfile located in ~/project/dockerfil
 
 and you are bound to enjoy your evening with a nice cup of coffee.
 
+![Demo GIF](assets/demo.gif)
+
 # Quickstart
 
 ## Installation
